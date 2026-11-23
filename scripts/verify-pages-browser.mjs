@@ -1,0 +1,56 @@
+import { publicMediaPath } from '../src/lib/data/media-delivery.js';
+import assert from 'node:assert/strict';
+import {createPagesServer} from './serve-pages.mjs';
+import {base} from './built-site.mjs';
+import {projects,files} from './project-catalog.mjs';
+import {chromium} from 'playwright-core';
+
+const port=5191,origin=`http://127.0.0.1:${port}`,url=path=>origin+base+path;
+const server=createPagesServer('build',base);let browser;
+try{
+ await new Promise(resolve=>server.listen(port,'127.0.0.1',resolve));
+ for(const path of ['/','/research/','/about/','/bio/','/photography/',...projects.map(project=>`/projects/${project.slug}/`)])assert.equal((await fetch(url(path))).status,200,path);
+ for(const path of files){const response=await fetch(url(publicMediaPath(path)),{headers:{Range:'bytes=0-31'}});assert.equal(response.status,206,path);assert.equal((await response.arrayBuffer()).byteLength,32,path);}
+ assert.equal((await fetch(url('/__work-layout'))).status,404);
+ assert.equal((await fetch(url('/__work-layout'),{method:'POST',body:'{}'})).status,405);
+ browser=await chromium.launch({executablePath:process.env.PDF_CHROME??'/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',headless:true});
+ const page=await browser.newPage({viewport:{width:1440,height:1100},ignoreHTTPSErrors:true}),errors=[],requests=[];
+ page.on('pageerror',error=>errors.push(error.message));page.on('request',request=>requests.push(request.url()));
+ await page.goto(url('/'),{waitUntil:'domcontentloaded'});
+ assert.equal(await page.getByRole('button',{name:'Edit Layout',exact:true}).count(),0);
+ const card=page.locator('#deep-eye');await card.scrollIntoViewIfNeeded();await card.click();await page.waitForURL('**/projects/deep-eye/');
+ assert.equal(await page.locator('h1').textContent(),'Deep Eye — Venice Boat Museum');
+ await page.goto(url('/projects/decarbonization/'),{waitUntil:'domcontentloaded'});
+ const pdf=page.locator('.large-images .pdf-viewer');await pdf.scrollIntoViewIfNeeded();await pdf.locator('canvas.ready[data-page="1"]').waitFor({timeout:30000});
+ await pdf.getByRole('button',{name:'Next PDF page'}).click();await pdf.locator('canvas.ready[data-page="2"]').waitFor({timeout:30000});
+ assert.ok(requests.some(path=>path.includes(`${base}/_app/immutable/assets/pdf.worker`)));
+ await page.goto(url('/projects/floating-purifier/'),{waitUntil:'domcontentloaded'});
+ const drawing=page.locator('.large-images img').first();
+ assert.ok((await drawing.getAttribute('src')).includes('/optimized/projects/floating-purifier/cover1.webp'));
+ await drawing.evaluate(node=>node.decode());
+ assert.deepEqual(await drawing.evaluate(node=>[node.naturalWidth,node.naturalHeight]),[4500,8000]);
+ await page.goto(url('/projects/material-experimentation/'),{waitUntil:'domcontentloaded'});
+ const video=page.locator('.large-images video');assert.equal(await video.count(),1);assert.equal(await video.getAttribute('controls'),'');
+ await video.evaluate(node=>node.readyState>=1?Promise.resolve():new Promise((resolve,reject)=>{node.addEventListener('loadedmetadata',resolve,{once:true});node.addEventListener('error',reject,{once:true});}));
+ assert.ok((await video.getAttribute('src')).includes('/optimized/projects/'));
+ assert.ok(Math.abs(await video.evaluate(node=>node.duration)-246.533333)<0.1);
+ await video.evaluate(async node=>{node.muted=true;await node.play();});
+ await page.waitForFunction(()=>document.querySelector('.large-images video').currentTime>0.1);
+ await video.evaluate(node=>{node.pause();node.currentTime=240;});
+ await page.waitForFunction(()=>{const node=document.querySelector('.large-images video');return node.readyState>=2&&Math.abs(node.currentTime-240)<0.1;});
+ await page.goto(url('/projects/spatial-barrier-game/'),{waitUntil:'domcontentloaded'});
+ const game=page.frameLocator('iframe');await game.locator('#message').waitFor();assert.ok((await game.locator('#message').textContent()).includes('Player A'));
+ await game.locator('#reset').click();
+ await page.goto(url('/interactive/spatial-barrier-game/index.html'));assert.ok((await page.locator('#message').textContent()).includes('Player A'));
+ await page.goto(url('/projects/population-flood-sandbox/'),{waitUntil:'domcontentloaded'});
+ const flood=page.frameLocator('iframe');await flood.locator('#year-buttons button').last().waitFor({timeout:30000});
+ await flood.locator('#year-buttons button').last().click();
+ await flood.locator('#metrics-year').getByText('2050',{exact:true}).waitFor({timeout:30000});
+ await flood.locator('#map-status').getByText(/2050.*populated/).waitFor({timeout:30000});
+ assert.equal(await flood.locator('.leaflet-control-attribution').count(),1);
+ await page.goto(url('/interactive/population-flood-sandbox/index.html'),{waitUntil:'domcontentloaded'});
+ await page.locator('#map-status').getByText(/2020.*populated/).waitFor({timeout:30000});
+ await page.goto(url('/projects/cloud/'));await page.waitForURL('**/projects/cloud-pavilion/');
+ assert.deepEqual(errors,[]);
+ console.log('Passed plain-static-host verification: all direct project URLs and media ranges, client navigation, multi-page PDF/worker, optimized WebP decoding, full-duration MP4 playback/seeking, both embedded/standalone simulations, Leaflet/year controls, legacy redirect and no production editor/writer.');
+}finally{await browser?.close();await new Promise(resolve=>server.close(resolve));}

@@ -1,0 +1,37 @@
+[
+  {
+    "Water_Level_m": 0,
+    "Exposed_2020": 0,
+    "Exposed_2030": 0,
+    "Exposed_2040": 0,
+    "Exposed_2050": 0
+  },
+  {
+    "Water_Level_m": 1,
+    "Exposed_2020": 23404,
+    "Exposed_2030": 23235,
+    "Exposed_2040": 24325,
+    "Exposed_2050": 25226
+  },
+  {
+    "Water_Level_m": 2,
+    "Exposed_2020": 82926,
+    "Exposed_2030": 82294,
+    "Exposed_2040": 86128,
+    "Exposed_2050": 89279
+  },
+  {
+    "Water_Level_m": 3,
+    "Exposed_2020": 328376,
+    "Exposed_2030": 325601,
+    "Exposed_2040": 340583,
+    "Exposed_2050": 352714
+  },
+  {
+    "Water_Level_m": 4,
+    "Exposed_2020": 534505,
+    "Exposed_2030": 529878,
+    "Exposed_2040": 554182,
+    "Exposed_2050": 573787
+  }
+]

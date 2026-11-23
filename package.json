@@ -1,0 +1,44 @@
+{
+  "name": "architecture-portfolio",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "imports": {
+    "#lib": "./src/lib/index.js",
+    "#lib/*": "./src/lib/*"
+  },
+  "scripts": {
+    "dev": "vite dev",
+    "build": "vite build",
+    "preview": "vite preview",
+    "prepare": "svelte-kit sync || echo ''",
+    "check": "svelte-kit sync && svelte-check --tsconfig ./jsconfig.json",
+    "check:watch": "svelte-kit sync && svelte-check --tsconfig ./jsconfig.json --watch",
+    "test:spatial": "node --test tests/spatial-barrier/core.test.js",
+    "verify:spatial": "node scripts/verify-spatial-integration.mjs",
+    "verify:flood": "node scripts/verify-flood-integration.mjs",
+    "verify:layout": "npm run build && node scripts/verify-work-layout-browser.mjs",
+    "test": "node --test tests/*.test.mjs tests/spatial-barrier/core.test.js",
+    "verify:pages": "node scripts/verify-pages.mjs",
+    "audit:deployment": "node scripts/audit-deployment.mjs",
+    "preview:pages": "node scripts/serve-pages.mjs",
+    "verify:pages:browser": "node scripts/verify-pages-browser.mjs"
+  },
+  "devDependencies": {
+    "@sveltejs/adapter-static": "^4.0.1",
+    "@sveltejs/kit": "^3.0.0",
+    "@sveltejs/vite-plugin-svelte": "^7.2.0",
+    "playwright-core": "^1.65.1",
+    "svelte": "^5.57.2",
+    "svelte-check": "^4.6.0",
+    "typescript": "^6.0.3",
+    "vite": "^8.3.0"
+  },
+  "dependencies": {
+    "pdfjs-dist": "^6.5.438",
+    "svelte-dnd-action": "^0.9.80"
+  },
+  "engines": {
+    "node": ">=24"
+  }
+}

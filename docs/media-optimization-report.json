@@ -1,0 +1,332 @@
+{
+  "repository": {
+    "canonical": "cqz623/portfolio",
+    "repositoryId": 1447074013,
+    "defaultBranch": "main",
+    "productionBase": "/portfolio",
+    "publicURL": "https://cqz623.github.io/portfolio/",
+    "localGitDirectory": false
+  },
+  "before": {
+    "staticBytes": 2106358097,
+    "buildBytes": 2111829046,
+    "top20Media": [
+      {
+        "path": "static/images/projects/material- experimentation/cover01.mp4",
+        "bytes": 1812062960
+      },
+      {
+        "path": "static/images/projects/floating-purifier/cover1.png",
+        "bytes": 134950754
+      },
+      {
+        "path": "static/images/projects/decarbonization/cover01.pdf",
+        "bytes": 14449298
+      },
+      {
+        "path": "static/images/projects/cloud/cover.jpg",
+        "bytes": 11259641
+      },
+      {
+        "path": "static/images/projects/cloud/cover01.jpg",
+        "bytes": 11259641
+      },
+      {
+        "path": "static/images/projects/material- experimentation/cover.mp4",
+        "bytes": 10915877
+      },
+      {
+        "path": "static/images/projects/theory-in-practice/cover.png",
+        "bytes": 9879431
+      },
+      {
+        "path": "static/images/projects/theory-in-practice/cover01.pdf",
+        "bytes": 9363736
+      },
+      {
+        "path": "static/images/projects/downsville-covered-bridge/01.png",
+        "bytes": 4825578
+      },
+      {
+        "path": "static/images/projects/deep-eye/05.png",
+        "bytes": 3544868
+      },
+      {
+        "path": "static/images/projects/reviving-spaces/cover.png",
+        "bytes": 3420482
+      },
+      {
+        "path": "static/images/projects/layered-walkway/cover01.png",
+        "bytes": 3109724
+      },
+      {
+        "path": "static/images/projects/funeral-home/cover.png",
+        "bytes": 2961871
+      },
+      {
+        "path": "static/images/projects/mercury-store/cover01.JPG",
+        "bytes": 2635799
+      },
+      {
+        "path": "static/images/projects/theatre/03.png",
+        "bytes": 2265776
+      },
+      {
+        "path": "static/images/projects/funeral-home/cover01.pdf",
+        "bytes": 2023771
+      },
+      {
+        "path": "static/images/projects/layered-walkway/01.png",
+        "bytes": 1827191
+      },
+      {
+        "path": "static/images/projects/theatre/02.png",
+        "bytes": 1820616
+      },
+      {
+        "path": "static/images/projects/theatre/cover.png",
+        "bytes": 1820616
+      },
+      {
+        "path": "static/images/projects/floating-purifier/01.png",
+        "bytes": 1597506
+      }
+    ],
+    "over100MiB": [
+      {
+        "path": "static/images/projects/floating-purifier/cover1.png",
+        "bytes": 134950754
+      },
+      {
+        "path": "static/images/projects/material- experimentation/cover01.mp4",
+        "bytes": 1812062960
+      }
+    ],
+    "duplicates": [
+      [
+        "static/images/projects/cloud/cover.jpg",
+        "static/images/projects/cloud/cover01.jpg"
+      ],
+      [
+        "static/images/projects/deep-eye/cover.png",
+        "static/images/projects/deep-eye/cover01.png"
+      ],
+      [
+        "static/images/projects/downsville-covered-bridge/cover.jpg",
+        "static/images/projects/downsville-covered-bridge/cover01.jpg"
+      ],
+      [
+        "static/images/projects/theatre/02.png",
+        "static/images/projects/theatre/cover.png"
+      ]
+    ],
+    "unusedProjectMedia": []
+  },
+  "assets": [
+    {
+      "original": "static/images/projects/floating-purifier/cover1.png",
+      "optimized": "static/optimized/projects/floating-purifier/cover1.webp",
+      "originalBytes": 134950754,
+      "optimizedBytes": 5734848,
+      "originalSha256": "370797b5a50821e1c161a7ec78dd0cb4d439fff49d5d39d2fe4097e893a2abf6",
+      "optimizedSha256": "448fd7bad988c68be380d420c4dc2f6f1ff46111a4ec3c294a6432e3828f4c40",
+      "originalDimensions": [
+        8438,
+        15000
+      ],
+      "optimizedDimensions": [
+        4500,
+        8000
+      ],
+      "encoding": "WebP quality 94, alpha quality 100, effort 6; proportional resize to 8000px height, transparency retained"
+    },
+    {
+      "original": "static/images/projects/material- experimentation/cover01.mp4",
+      "optimized": "static/optimized/projects/material- experimentation/cover01.mp4",
+      "originalBytes": 1812062960,
+      "optimizedBytes": 47144283,
+      "originalSha256": "ccf4b278368c4b97bc53c559d83feb0bc56a42fe3b944fa192b23c5ecb83f7da",
+      "optimizedSha256": "4428ba787ca473f65b9fb063ea0bacd84b8ef0e513cc5f46b1b39e2e0062926b",
+      "originalDimensions": [
+        3382,
+        1902
+      ],
+      "optimizedDimensions": [
+        1280,
+        720
+      ],
+      "encoding": "FFmpeg libx264, preset slow, CRF 26, yuv420p, AAC stream copy, +faststart",
+      "videoFrames": 7396,
+      "framesPerSecond": 30,
+      "videoDurationSeconds": 246.533333,
+      "audio": "Original stereo AAC, 48 kHz, copied without re-encoding"
+    }
+  ],
+  "after": {
+    "localStaticIncludingPreservedOriginalsBytes": 2159237228,
+    "deployableStaticBytes": 212223514,
+    "buildBytes": 217694142,
+    "buildFiles": 389,
+    "staticFilesOver100MiB": [
+      {
+        "path": "static/images/projects/floating-purifier/cover1.png",
+        "bytes": 134950754
+      },
+      {
+        "path": "static/images/projects/material- experimentation/cover01.mp4",
+        "bytes": 1812062960
+      }
+    ],
+    "publishableSourceFilesOver100MiB": [],
+    "buildFilesOver100MiB": [],
+    "top20PublishedMedia": [
+      {
+        "path": "build/optimized/projects/material- experimentation/cover01.mp4",
+        "bytes": 47144283
+      },
+      {
+        "path": "build/images/projects/decarbonization/cover01.pdf",
+        "bytes": 14449298
+      },
+      {
+        "path": "build/images/projects/cloud/cover.jpg",
+        "bytes": 11259641
+      },
+      {
+        "path": "build/images/projects/cloud/cover01.jpg",
+        "bytes": 11259641
+      },
+      {
+        "path": "build/images/projects/material- experimentation/cover.mp4",
+        "bytes": 10915877
+      },
+      {
+        "path": "build/images/projects/theory-in-practice/cover.png",
+        "bytes": 9879431
+      },
+      {
+        "path": "build/images/projects/theory-in-practice/cover01.pdf",
+        "bytes": 9363736
+      },
+      {
+        "path": "build/optimized/projects/floating-purifier/cover1.webp",
+        "bytes": 5734848
+      },
+      {
+        "path": "build/images/projects/downsville-covered-bridge/01.png",
+        "bytes": 4825578
+      },
+      {
+        "path": "build/images/projects/deep-eye/05.png",
+        "bytes": 3544868
+      },
+      {
+        "path": "build/images/projects/reviving-spaces/cover.png",
+        "bytes": 3420482
+      },
+      {
+        "path": "build/images/projects/layered-walkway/cover01.png",
+        "bytes": 3109724
+      },
+      {
+        "path": "build/images/projects/funeral-home/cover.png",
+        "bytes": 2961871
+      },
+      {
+        "path": "build/images/projects/mercury-store/cover01.JPG",
+        "bytes": 2635799
+      },
+      {
+        "path": "build/images/projects/theatre/03.png",
+        "bytes": 2265776
+      },
+      {
+        "path": "build/images/projects/funeral-home/cover01.pdf",
+        "bytes": 2023771
+      },
+      {
+        "path": "build/images/projects/layered-walkway/01.png",
+        "bytes": 1827191
+      },
+      {
+        "path": "build/images/projects/theatre/02.png",
+        "bytes": 1820616
+      },
+      {
+        "path": "build/images/projects/theatre/cover.png",
+        "bytes": 1820616
+      },
+      {
+        "path": "build/images/projects/floating-purifier/01.png",
+        "bytes": 1597506
+      }
+    ]
+  },
+  "duplicates": {
+    "groups": [
+      [
+        "static/images/projects/cloud/cover.jpg",
+        "static/images/projects/cloud/cover01.jpg"
+      ],
+      [
+        "static/images/projects/deep-eye/cover.png",
+        "static/images/projects/deep-eye/cover01.png"
+      ],
+      [
+        "static/images/projects/downsville-covered-bridge/cover.jpg",
+        "static/images/projects/downsville-covered-bridge/cover01.jpg"
+      ],
+      [
+        "static/images/projects/theatre/02.png",
+        "static/images/projects/theatre/cover.png"
+      ]
+    ],
+    "decision": "Retained: identical files serve distinct homepage/detail/gallery slots. No project media is unused."
+  },
+  "preservation": {
+    "originalFilesVerified": 127,
+    "allOriginalStaticChecksumsUnchanged": true,
+    "protectedContentAndLayoutsUnchanged": true,
+    "protectedFiles": {
+      "src/lib/data/projects.js": "56d0871904e6db33f6c954de95720c179e96009160813712f843b45bcb24b11c",
+      "src/lib/data/work-layout.json": "e2b8cba2d137cf71903b0ad98c1fadb761607a11bd679aeba9e36b75d9bd862f",
+      "src/routes/+page.svelte": "7e24d075f09c0b7dd3e44b6b2fa3384784fc4a45060f9f7d459a02bee970f0bb",
+      "src/routes/projects/[slug]/+page.svelte": "dcd9495f2f8a3fedc27ef7120c71eb47fed1e59a79383315f95fefafb8db2e8e",
+      "src/lib/site.css": "007a4fe0df0c149498ca49bc572c8b9d8cff8bba9e5156132f43a8460cb50e8b",
+      "src/lib/components/WorkCover.svelte": "6bc4db7837561dd6504392fcae35f22433ef96bbdc64ed46188244b0220beb7a",
+      "src/lib/components/ProjectGallery.svelte": "6560e679861aa2fcf3b5649dfafb52356708e02c5b64a9db3c414d02dc42f9bd",
+      "src/lib/components/PdfPreview.svelte": "a9ef06ea1c7f0024ae62b73e8be8c007fd7d7a602f6b535a8040ff8d7ae345ca"
+    }
+  },
+  "validation": {
+    "check": "0 errors, 0 warnings",
+    "tests": "56 passed",
+    "productionBuild": "passed",
+    "staticPages": "23 prerendered pages and 731 local URLs passed under /portfolio",
+    "mediaOrdering": "all 18 project pages passed",
+    "browser": "WebP decoded at 4500x8000, full-duration optimized MP4 playback and seek to 240s, PDF page navigation/worker, all routes/media byte ranges, both embedded and standalone simulations passed",
+    "cleanCheckout": "discovery catalog identical with both original files absent",
+    "gitignore": "both original paths checked with git check-ignore in an isolated temporary repository",
+    "fastStart": true,
+    "strictDeploymentAudit": "passed"
+  },
+  "remainingMediaBlockers": [],
+  "changedFiles": [
+    ".gitignore",
+    ".github/workflows/deploy.yml",
+    "README.md",
+    "vite.config.js",
+    "src/lib/data/media-delivery.js",
+    "src/lib/utils/project-gallery.js",
+    "scripts/project-gallery-files.mjs",
+    "scripts/web-media.mjs",
+    "scripts/audit-deployment.mjs",
+    "scripts/verify-pages.mjs",
+    "scripts/verify-pages-browser.mjs",
+    "tests/project-video.test.mjs",
+    "tests/web-media.test.mjs",
+    "static/optimized/projects/floating-purifier/cover1.webp",
+    "static/optimized/projects/material- experimentation/cover01.mp4",
+    "docs/media-optimization-report.json"
+  ]
+}

@@ -1,0 +1,302 @@
+{
+  "repository": "https://github.com/cqz623/population-flood-sandbox",
+  "commit": "35c7e5578e65135eefdffdcdcfd6efbed263a2e1",
+  "files": [
+    {
+      "path": "index.html",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "26f67ec51fbde51379af5dae7c9b8b521f44e047",
+      "size": 33206,
+      "url": "https://api.github.com/repos/cqz623/population-flood-sandbox/git/blobs/26f67ec51fbde51379af5dae7c9b8b521f44e047"
+    },
+    {
+      "path": "sandbox/borough_boundaries.geojson",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "33e1edfe749c90b16dab7ef59c1d28e8242c9b5c",
+      "size": 1236493,
+      "url": "https://api.github.com/repos/cqz623/population-flood-sandbox/git/blobs/33e1edfe749c90b16dab7ef59c1d28e8242c9b5c"
+    },
+    {
+      "path": "sandbox/counterfactual_analysis.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "fd625988cff41d417612072a7070da4962401300",
+      "size": 633,
+      "url": "https://api.github.com/repos/cqz623/population-flood-sandbox/git/blobs/fd625988cff41d417612072a7070da4962401300"
+    },
+    {
+      "path": "sandbox/exposure_by_year.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "529ae9ef195f04315e86eedf858d402dd706d45c",
+      "size": 596,
+      "url": "https://api.github.com/repos/cqz623/population-flood-sandbox/git/blobs/529ae9ef195f04315e86eedf858d402dd706d45c"
+    },
+    {
+      "path": "sandbox/exposure_table.csv",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "aa3bb1232c3c8b0a71d988b66765941d6204dda5",
+      "size": 188,
+      "url": "https://api.github.com/repos/cqz623/population-flood-sandbox/git/blobs/aa3bb1232c3c8b0a71d988b66765941d6204dda5"
+    },
+    {
+      "path": "sandbox/exposure_table.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "761a628e191ee717b66fcd934d95fa9936133a57",
+      "size": 694,
+      "url": "https://api.github.com/repos/cqz623/population-flood-sandbox/git/blobs/761a628e191ee717b66fcd934d95fa9936133a57"
+    },
+    {
+      "path": "sandbox/flood_affected_parcels_2020.geojson",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "79ab9e3726a4fbda7c97ef5f5276f8ab3608e69a",
+      "size": 2577195,
+      "url": "https://api.github.com/repos/cqz623/population-flood-sandbox/git/blobs/79ab9e3726a4fbda7c97ef5f5276f8ab3608e69a"
+    },
+    {
+      "path": "sandbox/flood_affected_parcels_2030.geojson",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "0c614dadbc1562dad1788b42c9240994596bdc6b",
+      "size": 2764911,
+      "url": "https://api.github.com/repos/cqz623/population-flood-sandbox/git/blobs/0c614dadbc1562dad1788b42c9240994596bdc6b"
+    },
+    {
+      "path": "sandbox/flood_affected_parcels_2040.geojson",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "94f1ece07c00ab1ac51b0005e87b4b9f9f54b738",
+      "size": 2947953,
+      "url": "https://api.github.com/repos/cqz623/population-flood-sandbox/git/blobs/94f1ece07c00ab1ac51b0005e87b4b9f9f54b738"
+    },
+    {
+      "path": "sandbox/flood_affected_parcels_2050.geojson",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "1025ce9603faaf2a27b8c7058347d248107953fa",
+      "size": 3072036,
+      "url": "https://api.github.com/repos/cqz623/population-flood-sandbox/git/blobs/1025ce9603faaf2a27b8c7058347d248107953fa"
+    },
+    {
+      "path": "sandbox/lot_exposure_flags.csv",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "804ebbbade43f508c7ae724f2bb10ae915082b9c",
+      "size": 11114165,
+      "url": "https://api.github.com/repos/cqz623/population-flood-sandbox/git/blobs/804ebbbade43f508c7ae724f2bb10ae915082b9c"
+    },
+    {
+      "path": "sandbox/maps/exposed_population_2020.geojson",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "ceade1241e359f803300b56afce78418efc87a6f",
+      "size": 240327,
+      "url": "https://api.github.com/repos/cqz623/population-flood-sandbox/git/blobs/ceade1241e359f803300b56afce78418efc87a6f"
+    },
+    {
+      "path": "sandbox/maps/exposed_population_2030.geojson",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "d0e48a546e38b61c289b88be1a17e5a6f4cc78e7",
+      "size": 296367,
+      "url": "https://api.github.com/repos/cqz623/population-flood-sandbox/git/blobs/d0e48a546e38b61c289b88be1a17e5a6f4cc78e7"
+    },
+    {
+      "path": "sandbox/maps/exposed_population_2040.geojson",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "047920666a2c518602357a0f433cac284a8c4b47",
+      "size": 344142,
+      "url": "https://api.github.com/repos/cqz623/population-flood-sandbox/git/blobs/047920666a2c518602357a0f433cac284a8c4b47"
+    },
+    {
+      "path": "sandbox/maps/exposed_population_2050.geojson",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "7d218718b34e3983e14f6b3723619f2b52750931",
+      "size": 369787,
+      "url": "https://api.github.com/repos/cqz623/population-flood-sandbox/git/blobs/7d218718b34e3983e14f6b3723619f2b52750931"
+    },
+    {
+      "path": "sandbox/maps/flood_0m.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "3ce66e9b72b6067886ceacf559fe76d54ae895c6",
+      "size": 11260,
+      "url": "https://api.github.com/repos/cqz623/population-flood-sandbox/git/blobs/3ce66e9b72b6067886ceacf559fe76d54ae895c6"
+    },
+    {
+      "path": "sandbox/maps/flood_1m.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "72ee1f18db1df91c55047b8ec1958aedd44bfa67",
+      "size": 19680,
+      "url": "https://api.github.com/repos/cqz623/population-flood-sandbox/git/blobs/72ee1f18db1df91c55047b8ec1958aedd44bfa67"
+    },
+    {
+      "path": "sandbox/maps/flood_2020.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "20587841a4ce5144191cba589963e9c765037a66",
+      "size": 117351,
+      "url": "https://api.github.com/repos/cqz623/population-flood-sandbox/git/blobs/20587841a4ce5144191cba589963e9c765037a66"
+    },
+    {
+      "path": "sandbox/maps/flood_2030.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "88def643ee11342efd678a516fab5e6bcc88dd2c",
+      "size": 116350,
+      "url": "https://api.github.com/repos/cqz623/population-flood-sandbox/git/blobs/88def643ee11342efd678a516fab5e6bcc88dd2c"
+    },
+    {
+      "path": "sandbox/maps/flood_2040.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "db8e81e07447e56b245bc353a0ec4091d00c0be7",
+      "size": 118473,
+      "url": "https://api.github.com/repos/cqz623/population-flood-sandbox/git/blobs/db8e81e07447e56b245bc353a0ec4091d00c0be7"
+    },
+    {
+      "path": "sandbox/maps/flood_2050.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "a2a0a55e3cc81ae57d3adfe327a917e85f52a5f3",
+      "size": 117773,
+      "url": "https://api.github.com/repos/cqz623/population-flood-sandbox/git/blobs/a2a0a55e3cc81ae57d3adfe327a917e85f52a5f3"
+    },
+    {
+      "path": "sandbox/maps/flood_2m.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "dc257d18897dba4e7a5e13610744620704942add",
+      "size": 23834,
+      "url": "https://api.github.com/repos/cqz623/population-flood-sandbox/git/blobs/dc257d18897dba4e7a5e13610744620704942add"
+    },
+    {
+      "path": "sandbox/maps/flood_3m.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "83bf913e53904b4666cff7800b21594a9434b7f8",
+      "size": 23271,
+      "url": "https://api.github.com/repos/cqz623/population-flood-sandbox/git/blobs/83bf913e53904b4666cff7800b21594a9434b7f8"
+    },
+    {
+      "path": "sandbox/maps/flood_4m.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "e64b5966555f08fed44cb2cae1dd5c631237a0ca",
+      "size": 20161,
+      "url": "https://api.github.com/repos/cqz623/population-flood-sandbox/git/blobs/e64b5966555f08fed44cb2cae1dd5c631237a0ca"
+    },
+    {
+      "path": "sandbox/maps/flood_boundary_2020.geojson",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "1bb234cde483793dc86d3aab1dce7b607d36fea0",
+      "size": 719275,
+      "url": "https://api.github.com/repos/cqz623/population-flood-sandbox/git/blobs/1bb234cde483793dc86d3aab1dce7b607d36fea0"
+    },
+    {
+      "path": "sandbox/maps/flood_boundary_2030.geojson",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "3a208106934a50f8252bf0612320f494dd356281",
+      "size": 672428,
+      "url": "https://api.github.com/repos/cqz623/population-flood-sandbox/git/blobs/3a208106934a50f8252bf0612320f494dd356281"
+    },
+    {
+      "path": "sandbox/maps/flood_boundary_2040.geojson",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "eb64c421a433f4dd3fdbd2a386e0a8b30429c0f6",
+      "size": 696649,
+      "url": "https://api.github.com/repos/cqz623/population-flood-sandbox/git/blobs/eb64c421a433f4dd3fdbd2a386e0a8b30429c0f6"
+    },
+    {
+      "path": "sandbox/maps/flood_boundary_2050.geojson",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "e4fe0cf262afe082c06fd0e19246c4750cfac672",
+      "size": 683104,
+      "url": "https://api.github.com/repos/cqz623/population-flood-sandbox/git/blobs/e4fe0cf262afe082c06fd0e19246c4750cfac672"
+    },
+    {
+      "path": "sandbox/maps/flood_boundary_visual_2020.geojson",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "0c494185dfe463f035666e6c8533ab98de3cd7d3",
+      "size": 626209,
+      "url": "https://api.github.com/repos/cqz623/population-flood-sandbox/git/blobs/0c494185dfe463f035666e6c8533ab98de3cd7d3"
+    },
+    {
+      "path": "sandbox/maps/flood_boundary_visual_2030.geojson",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "818ec9367a650a2aa0aa863e8c09c91959738dbf",
+      "size": 585607,
+      "url": "https://api.github.com/repos/cqz623/population-flood-sandbox/git/blobs/818ec9367a650a2aa0aa863e8c09c91959738dbf"
+    },
+    {
+      "path": "sandbox/maps/flood_boundary_visual_2040.geojson",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "360b9e302c342fa8c3fab321391e2a89f63d2539",
+      "size": 606702,
+      "url": "https://api.github.com/repos/cqz623/population-flood-sandbox/git/blobs/360b9e302c342fa8c3fab321391e2a89f63d2539"
+    },
+    {
+      "path": "sandbox/maps/flood_boundary_visual_2050.geojson",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "a37006389f6fd4afdab848304853942b3b9b9d11",
+      "size": 594760,
+      "url": "https://api.github.com/repos/cqz623/population-flood-sandbox/git/blobs/a37006389f6fd4afdab848304853942b3b9b9d11"
+    },
+    {
+      "path": "sandbox/maps/map_config.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "64624403e6647e33f886a9570b10614055e6485b",
+      "size": 990,
+      "url": "https://api.github.com/repos/cqz623/population-flood-sandbox/git/blobs/64624403e6647e33f886a9570b10614055e6485b"
+    },
+    {
+      "path": "sandbox/parcel_intersection_exposure_by_year.csv",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "c548f2a10916ed57fb2cf9db7049fce0cf740c15",
+      "size": 211,
+      "url": "https://api.github.com/repos/cqz623/population-flood-sandbox/git/blobs/c548f2a10916ed57fb2cf9db7049fce0cf740c15"
+    },
+    {
+      "path": "sandbox/population_exposure_grid.geojson",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "4c98001ea4e809078d76239026f70a744b95fbac",
+      "size": 3201904,
+      "url": "https://api.github.com/repos/cqz623/population-flood-sandbox/git/blobs/4c98001ea4e809078d76239026f70a744b95fbac"
+    },
+    {
+      "path": "sandbox/population_totals.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "4dd54417d8523ad8f57292dfd9e4e2ef50c9b443",
+      "size": 78,
+      "url": "https://api.github.com/repos/cqz623/population-flood-sandbox/git/blobs/4dd54417d8523ad8f57292dfd9e4e2ef50c9b443"
+    },
+    {
+      "path": "sandbox/tract_population.geojson",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "831269f39c1e8eed515d12371f1d27ab4f2fe180",
+      "size": 2927713,
+      "url": "https://api.github.com/repos/cqz623/population-flood-sandbox/git/blobs/831269f39c1e8eed515d12371f1d27ab4f2fe180"
+    }
+  ]
+}

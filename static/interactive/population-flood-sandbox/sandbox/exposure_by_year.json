@@ -1,0 +1,26 @@
+{
+  "2020": {
+    "total_population": 4423914,
+    "exposed_population": 16851,
+    "exposure_percent": 0.38,
+    "water_level_m_navd88": 0.706
+  },
+  "2030": {
+    "total_population": 4383679,
+    "exposed_population": 19476,
+    "exposure_percent": 0.44,
+    "water_level_m_navd88": 0.8584
+  },
+  "2040": {
+    "total_population": 4583414,
+    "exposed_population": 23082,
+    "exposure_percent": 0.5,
+    "water_level_m_navd88": 0.982225
+  },
+  "2050": {
+    "total_population": 4743223,
+    "exposed_population": 28029,
+    "exposure_percent": 0.59,
+    "water_level_m_navd88": 1.077475
+  }
+}

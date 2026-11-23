@@ -1,0 +1,48 @@
+node_modules
+
+# Output
+.output
+.vercel
+.netlify
+.wrangler
+/.svelte-kit
+/build
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Env
+.env
+.env.*
+!.env.example
+
+# Vite
+vite.config.js.timestamp-*
+vite.config.ts.timestamp-*
+
+# Local tools, credentials and private configuration
+/.codex/
+/.agents/
+/.aws/
+/.ssh/
+/.npmrc
+/.netrc
+*.pem
+*.key
+*.p12
+*.pfx
+credentials.json
+service-account*.json
+
+# Logs and test/build caches
+*.log
+/coverage/
+/test-results/
+/playwright-report/
+/.cache/
+/dist/
+
+# Preserved local originals; separately optimized delivery copies are versioned.
+/static/images/projects/floating-purifier/cover1.png
+/static/images/projects/material- experimentation/cover01.mp4

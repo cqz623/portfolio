@@ -1,0 +1,633 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#FFFFFF">
+<title>Population × Flood Sandbox</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
+<style>
+:root{font-family:"Courier New",Courier,monospace;color:#111;background:#FFFFFF;font-synthesis:none;text-rendering:optimizeLegibility;--blue:#2929e8;--panel:#f1f1ed;--ink:#111;--rule:#171717}
+*{box-sizing:border-box}
+body{margin:0;background:#FFFFFF;color:var(--ink);font-size:14px;line-height:1.42}
+button{font:inherit}
+.page{max-width:1800px;margin:0 auto;padding:20px 24px 30px}
+.masthead{display:flex;align-items:baseline;justify-content:space-between;gap:20px;margin:0 0 14px;color:var(--ink)}
+.masthead h1{font-size:clamp(20px,2vw,30px);line-height:1.12;margin:0;font-weight:700}
+.masthead p{margin:0;font-size:12px;text-align:right}
+.workspace{display:grid;grid-template-columns:minmax(245px,20fr) minmax(390px,45fr) minmax(340px,35fr);gap:12px;align-items:stretch}
+.panel{background:var(--panel);border:1.5px solid var(--rule);padding:16px}
+.panel h2{font-size:13px;line-height:1.2;font-weight:700;text-transform:lowercase;margin:0 0 14px}
+.description{grid-column:1;min-width:0}
+.description section+section{border-top:1px solid #a5a59e;margin-top:16px;padding-top:14px}
+.description h3{font-size:11px;text-transform:lowercase;margin:0 0 7px}
+.description p,.description li{font-size:11px;line-height:1.5;margin:0}
+.description p+p{margin-top:10px}
+.description ul{padding-left:16px;margin:7px 0 0}
+.map-column{grid-column:2;min-width:0;min-height:clamp(900px,calc(100vh - 100px),1050px);display:flex}
+.map-panel{display:flex;flex:1;flex-direction:column;min-height:0;padding:0;overflow:hidden}
+.map-heading{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 14px;border-bottom:1px solid var(--rule);background:var(--panel)}
+.map-heading h2{margin:0}
+.map-heading span{font-size:10px;text-align:right}
+#map{flex:1;height:auto;min-height:850px;width:100%;background:#e1e2e5}
+.leaflet-container{font:11px "Courier New",Courier,monospace}
+.leaflet-control-attribution{font-size:9px!important}
+.metric-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));grid-auto-rows:1fr;gap:7px}
+.metric{display:grid;grid-template-rows:2.6em 1fr auto;border:1px solid #66665f;padding:10px 8px;min-width:0}
+.metric-label{display:block;font-size:10px;line-height:1.3;text-transform:lowercase}
+.metric-value{display:block;align-self:start;font-size:clamp(13px,1.15vw,20px);font-weight:700;line-height:1.15;font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+.metric-unit{display:block;font-size:9px;line-height:1.3;margin-top:6px}
+.sidebar{grid-column:3;min-width:0;display:grid;align-content:start;gap:12px}
+.year-buttons{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}
+.year-button{border:1px solid var(--rule);border-radius:0;background:transparent;padding:8px 6px;cursor:pointer;text-align:left;font-size:12px}
+.year-button:hover,.year-button:focus-visible{outline:2px solid var(--blue);outline-offset:1px}
+.year-button[aria-pressed="true"]{background:#111;color:#fff}
+.assumption-note{font-size:10px;line-height:1.5;margin:12px 0 0}
+.legend-list{list-style:none;margin:0;padding:0}
+.legend-list li{display:grid;grid-template-columns:25px 1fr;align-items:center;gap:8px;font-size:10px;margin:8px 0}
+.swatch{display:block;width:19px;height:15px;border:1px solid #333}
+.population-legend-title{font-size:10px;line-height:1.4;margin:14px 0 6px}
+.population-swatch{background:#ffe875}
+.population-swatch.second{background:#ffc247}
+.population-swatch.third{background:#ff8b24}
+.population-swatch.fourth{background:#ec4b1b}
+.population-swatch.fifth{background:#8e1015}
+.boundary-swatch{height:0;border:0;border-top:2px solid #111}
+.legend-note{font-size:10px;line-height:1.5;border-top:1px solid #a5a59e;padding-top:10px;margin:12px 0 0}
+.analysis{min-width:0}
+.analysis-intro{font-size:10px;line-height:1.5;border-bottom:1px solid #a5a59e;padding:0 0 10px;margin:-5px 0 12px}
+.comparison{width:100%;border-collapse:collapse;font-size:10px}
+.comparison th,.comparison td{text-align:left;padding:6px 7px;border:1px solid #77776f;font-variant-numeric:tabular-nums}
+.comparison th{font-weight:700;background:#e2e2dc}
+.decomposition{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px;margin-top:9px}
+.decomp-item{display:flex;flex-direction:column;justify-content:space-between;gap:8px;min-width:0;min-height:70px;border:1px solid #77776f;padding:8px}
+.decomp-item span{display:block;font-size:9px;line-height:1.3}
+.decomp-item strong{display:block;font-size:13px;line-height:1.15;overflow-wrap:anywhere;font-variant-numeric:tabular-nums}
+.error-message{display:none;background:#fff0ed;border:1px solid #9b1c0c;padding:12px;margin-bottom:12px;color:#681409;font-size:12px}
+.error-message.visible{display:block}
+.leaflet-tooltip{border:1px solid #111;border-radius:0;box-shadow:none;background:#f1f1ed;color:#111;padding:5px 7px}
+@media(max-width:1270px){
+ .workspace{grid-template-columns:minmax(0,1fr);gap:10px}
+ .description,.map-column,.sidebar{grid-column:1;grid-row:auto}
+ .description-inner{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+ .description section+section{border-top:0;border-left:1px solid #a5a59e;margin:0;padding:0 0 0 12px}
+ .map-column{min-height:0}
+ .map-panel{height:clamp(894px,calc(100vh - 76px),1044px)}
+ #map{min-height:0}
+ .metric-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .decomposition{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(max-width:680px){
+ body{font-size:13px}
+ .page{padding:12px}
+ .masthead{display:block}
+ .masthead p{text-align:left;margin-top:5px}
+ .workspace{display:flex;flex-direction:column}
+ .description,.map-column,.sidebar{width:100%}
+ .description{order:0}
+ .map-column{order:1}
+ .sidebar{order:2}
+ .sidebar{display:grid;grid-template-columns:1fr}
+ .map-column{min-height:0}
+ .map-panel{height:clamp(600px,75vh,850px)}
+ #map{min-height:0}
+ .description-inner{display:block}
+ .description section+section{border-left:0;border-top:1px solid #a5a59e;margin-top:10px;padding:10px 0 0}
+ .metric-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .decomposition{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .comparison{font-size:9px}
+ .comparison th,.comparison td{padding:5px 4px}
+}
+</style>
+</head>
+<body>
+<main class="page">
+ <header class="masthead">
+  <h1>Population × Flood Sandbox</h1>
+  <p>Manhattan + Brooklyn · paired year scenarios · not a forecast</p>
+ </header>
+ <div class="error-message" id="error-message" role="alert"></div>
+ <div class="workspace">
+  <aside class="panel description" aria-labelledby="description-title">
+   <h2 id="description-title">description</h2>
+   <div class="description-inner">
+    <section>
+     <h3>research question</h3>
+     <p>How do the precomputed population and flood-extent scenarios for 2020, 2030, 2040, and 2050 compare in estimated population exposure across Manhattan and Brooklyn?</p>
+    </section>
+    <section>
+     <h3>methodology</h3>
+     <p>A residential parcel is classified as potentially flood-affected when any portion intersects a flooded raster cell. Its full residential-unit-based population allocation is assigned once to a fixed 250 m grid cell using an interior representative point. Parcel-intersection metrics and flood boundaries come from precomputed project files; the counterfactual panel retains the earlier point-based analysis as a historical result.</p>
+    </section>
+    <section>
+     <h3>data sources</h3>
+     <ul>
+      <li>U.S. Census Bureau — 2020 Decennial Census population</li>
+      <li>NYC Department of City Planning — 2020 Census Tracts</li>
+      <li>NYC Department of City Planning — Population Projections for 2030–2055</li>
+      <li>NYC Department of City Planning — MapPLUTO</li>
+      <li>U.S. Geological Survey — 3DEP Digital Elevation Model</li>
+     </ul>
+    </section>
+    <section>
+     <h3>limitations</h3>
+     <p>These are simplified modeled scenarios, not validated hydrodynamic forecasts or observed outcomes. Water levels represent simplified high tide plus sea-level rise, not storm surge. Future population keeps the 2020 spatial distribution within each borough; residential-unit allocation is a proxy, not actual occupancy.</p>
+     <p>Flood defenses, building-floor elevations, daytime movement, evacuation, redevelopment, and detailed hydrodynamics are not represented.</p>
+    </section>
+   </div>
+  </aside>
+  <div class="map-column">
+   <section class="panel map-panel" aria-labelledby="map-title">
+    <div class="map-heading"><h2 id="map-title">Manhattan + Brooklyn</h2><span id="map-status" aria-live="polite">Loading scenario data…</span></div>
+    <div id="map" role="application" aria-label="Interactive map of Manhattan and Brooklyn"></div>
+   </section>
+  </div>
+  <aside class="sidebar">
+   <section class="panel assumptions" aria-labelledby="assumptions-title">
+    <h2 id="assumptions-title">assumptions</h2>
+    <div class="year-buttons" id="year-buttons" role="group" aria-label="Scenario year"></div>
+    <p class="assumption-note">Each year pairs its precomputed flood extent, parcel-intersection population totals, and high-tide plus sea-level-rise water level.</p>
+   </section>
+   <section class="panel representation" aria-labelledby="representation-title">
+    <h2 id="representation-title">representation</h2>
+    <ul class="legend-list">
+     <li><span class="swatch boundary-swatch" aria-hidden="true"></span><span>Potential Inundation Boundary</span></li>
+    </ul>
+    <h3 class="population-legend-title">Potentially Exposed Population per 250 m Grid Cell</h3>
+    <ul class="legend-list population-legend" id="population-legend" aria-label="Potentially exposed population per 250 meter grid cell">
+     <li><span class="swatch population-swatch" aria-hidden="true"></span><span>Calculating shared thresholds…</span></li>
+     <li><span class="swatch population-swatch second" aria-hidden="true"></span><span></span></li>
+     <li><span class="swatch population-swatch third" aria-hidden="true"></span><span></span></li>
+     <li><span class="swatch population-swatch fourth" aria-hidden="true"></span><span></span></li>
+     <li><span class="swatch population-swatch fifth" aria-hidden="true"></span><span></span></li>
+    </ul>
+    <p class="legend-note">Each square aggregates the full allocated population of residential parcels intersecting the modeled flood extent, assigned by parcel representative point. A colored square does not mean the entire square is inundated. Black lines show the potential-inundation boundary.</p>
+   </section>
+   <section class="panel metrics" aria-labelledby="metrics-title" aria-live="polite">
+    <h2 id="metrics-title">metrics · <span id="metrics-year">2020</span></h2>
+    <div class="metric-grid">
+     <div class="metric"><span class="metric-label">total population</span><strong class="metric-value" id="total-population">—</strong><span class="metric-unit">people</span></div>
+     <div class="metric"><span class="metric-label">exposed population</span><strong class="metric-value" id="exposed-population">—</strong><span class="metric-unit">people on flood-intersecting parcels</span></div>
+     <div class="metric"><span class="metric-label">affected parcels</span><strong class="metric-value" id="affected-parcels">—</strong><span class="metric-unit">flood-intersecting residential parcels</span></div>
+     <div class="metric"><span class="metric-label">exposure rate</span><strong class="metric-value" id="exposure-rate">—</strong><span class="metric-unit">of total population</span></div>
+     <div class="metric"><span class="metric-label">scenario water level</span><strong class="metric-value" id="water-level">—</strong><span class="metric-unit">m NAVD88</span></div>
+    </div>
+   </section>
+   <section class="panel analysis" aria-labelledby="analysis-title">
+    <h2 id="analysis-title">historical analysis · point-based 2020–2050 counterfactual</h2>
+    <p class="analysis-intro">Historical results use the former lot-representative-point exposure rule. They have not been recalculated for parcel intersection and are not comparable to the current parcel-based metrics above.</p>
+    <table class="comparison">
+     <thead><tr><th scope="col">flood extent scenario</th><th scope="col">2020 population</th><th scope="col">2050 population</th></tr></thead>
+     <tbody>
+      <tr><th scope="row">2020 flood extent</th><td id="scenario-a">—</td><td id="scenario-b">—</td></tr>
+      <tr><th scope="row">2050 flood extent</th><td id="scenario-c">—</td><td id="scenario-d">—</td></tr>
+     </tbody>
+    </table>
+    <div class="decomposition" aria-label="2020-baseline decomposition">
+     <div class="decomp-item"><span>total exposure increase</span><strong id="total-change">—</strong></div>
+     <div class="decomp-item"><span>population-only change</span><strong id="population-only">—</strong></div>
+     <div class="decomp-item"><span>flood-only change</span><strong id="flood-only">—</strong></div>
+     <div class="decomp-item"><span>interaction</span><strong id="interaction">—</strong></div>
+    </div>
+   </section>
+  </aside>
+ </div>
+</main>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+<script>
+const years=[2020,2030,2040,2050];
+const numberFormat=new Intl.NumberFormat("en-US");
+const gridSizeMeters=250;
+const utmSemiMajorAxis=6378137;
+const utmFlattening=1/298.257222101;
+const utmScaleFactor=.9996;
+const utmCentralMeridian=-75*Math.PI/180;
+const utmEccentricitySquared=utmFlattening*(2-utmFlattening);
+const utmSecondEccentricitySquared=utmEccentricitySquared/(1-utmEccentricitySquared);
+const exposedPopulationColors=["#ffe875","#ffc247","#ff8b24","#ec4b1b","#8e1015"];
+const expectedParcelCounts={2020:2405,2030:2788,2040:3156,2050:3395};
+let selectedYear=2020;
+let yearRequest=0;
+let map;
+let populationGridLayer;
+let populationGridRenderer;
+let floodBoundaryLayer;
+let floodBoundaryRenderer;
+let exposureData;
+let parcelExposureData;
+let populationGridsByYear;
+let populationColorBreaks;
+
+function require(condition,message){
+ if(!condition) throw new Error(message);
+}
+
+async function loadJson(path){
+ const response=await fetch(path);
+ if(!response.ok) throw new Error(`Could not load ${path} (${response.status}).`);
+ return response.json();
+}
+
+async function loadText(path){
+ const response=await fetch(path);
+ if(!response.ok) throw new Error(`Could not load ${path} (${response.status}).`);
+ return response.text();
+}
+
+function showError(error){
+ const message=document.getElementById("error-message");
+ message.textContent=`Unable to load the sandbox: ${error instanceof Error?error.message:String(error)}`;
+ message.classList.add("visible");
+ document.getElementById("map-status").textContent="Scenario data unavailable";
+ console.error(error);
+}
+
+function updateMetrics(year){
+ const scenarioValues=exposureData[String(year)];
+ const parcelValues=parcelExposureData[String(year)];
+ require(scenarioValues&&parcelValues,`Missing precomputed metrics for selected year ${year}.`);
+ document.getElementById("metrics-year").textContent=String(year);
+ document.getElementById("total-population").textContent=numberFormat.format(parcelValues.total_population);
+ document.getElementById("exposed-population").textContent=numberFormat.format(parcelValues.potentially_exposed_population);
+ document.getElementById("affected-parcels").textContent=numberFormat.format(parcelValues.affected_lots);
+ document.getElementById("exposure-rate").textContent=`${parcelValues.exposure_rate_percent.toFixed(3)}%`;
+ document.getElementById("water-level").textContent=Number(scenarioValues.water_level_m_navd88).toFixed(6);
+}
+
+function exposedPopulationColor(population){
+ const index=populationColorBreaks.findIndex(stop=>population<=stop);
+ return exposedPopulationColors[index<0?exposedPopulationColors.length-1:index];
+}
+
+function validateYearLayers(year,boundary){
+ require(boundary.type==="FeatureCollection"&&boundary.features.length>0,`Flood boundary for ${year} is empty or invalid.`);
+ require(boundary.features.every(feature=>feature.geometry?.type==="MultiLineString"&&Number(feature.properties?.year)===year),`Flood boundary geometry or year metadata is invalid for ${year}.`);
+}
+
+function quantile(sortedValues,probability){
+ const position=(sortedValues.length-1)*probability;
+ const lower=Math.floor(position);
+ const upper=Math.ceil(position);
+ if(lower===upper) return sortedValues[lower];
+ const fraction=position-lower;
+ return sortedValues[lower]*(1-fraction)+sortedValues[upper]*fraction;
+}
+
+function projectToUtm18N(longitude,latitude){
+ const phi=latitude*Math.PI/180;
+ const lambda=longitude*Math.PI/180;
+ const sinPhi=Math.sin(phi);
+ const cosPhi=Math.cos(phi);
+ const tanPhi=Math.tan(phi);
+ const n=utmSemiMajorAxis/Math.sqrt(1-utmEccentricitySquared*sinPhi*sinPhi);
+ const t=tanPhi*tanPhi;
+ const c=utmSecondEccentricitySquared*cosPhi*cosPhi;
+ const a=cosPhi*(lambda-utmCentralMeridian);
+ const a2=a*a;
+ const a3=a2*a;
+ const a4=a2*a2;
+ const a5=a4*a;
+ const a6=a3*a3;
+ const a7=a6*a;
+ const e2=utmEccentricitySquared;
+ const meridionalArc=utmSemiMajorAxis*(
+  (1-e2/4-3*e2*e2/64-5*e2*e2*e2/256)*phi
+  -(3*e2/8+3*e2*e2/32+45*e2*e2*e2/1024)*Math.sin(2*phi)
+  +(15*e2*e2/256+45*e2*e2*e2/1024)*Math.sin(4*phi)
+  -(35*e2*e2*e2/3072)*Math.sin(6*phi)
+ );
+ return{
+  x:500000+utmScaleFactor*n*(a+(1-t+c)*a3/6+(5-18*t+t*t+72*c-58*utmSecondEccentricitySquared)*a5/120+(61-479*t+179*t*t-t*t*t)*a7/5040),
+  y:utmScaleFactor*(meridionalArc+n*tanPhi*(a2/2+(5-t+9*c+4*c*c)*a4/24+(61-58*t+t*t+600*c-330*utmSecondEccentricitySquared)*a6/720))
+ };
+}
+
+function unprojectFromUtm18N(x,y){
+ const e2=utmEccentricitySquared;
+ const e1=(1-Math.sqrt(1-e2))/(1+Math.sqrt(1-e2));
+ const m=y/utmScaleFactor;
+ const mu=m/(utmSemiMajorAxis*(1-e2/4-3*e2*e2/64-5*e2*e2*e2/256));
+ const e12=e1*e1;
+ const e13=e12*e1;
+ const e14=e12*e12;
+ const phi1=mu
+  +(3*e1/2-27*e13/32)*Math.sin(2*mu)
+  +(21*e12/16-55*e14/32)*Math.sin(4*mu)
+  +(151*e13/96)*Math.sin(6*mu)
+  +(1097*e14/512)*Math.sin(8*mu);
+ const sinPhi1=Math.sin(phi1);
+ const cosPhi1=Math.cos(phi1);
+ const tanPhi1=Math.tan(phi1);
+ const n1=utmSemiMajorAxis/Math.sqrt(1-e2*sinPhi1*sinPhi1);
+ const r1=utmSemiMajorAxis*(1-e2)/Math.pow(1-e2*sinPhi1*sinPhi1,1.5);
+ const t1=tanPhi1*tanPhi1;
+ const c1=utmSecondEccentricitySquared*cosPhi1*cosPhi1;
+ const d=(x-500000)/(n1*utmScaleFactor);
+ const d2=d*d;
+ const d3=d2*d;
+ const d4=d2*d2;
+ const d5=d4*d;
+ const d6=d3*d3;
+ const latitude=phi1-(n1*tanPhi1/r1)*(d2/2-(5+3*t1+10*c1-4*c1*c1-9*utmSecondEccentricitySquared)*d4/24+(61+90*t1+298*c1+45*t1*t1-252*utmSecondEccentricitySquared-3*c1*c1)*d6/720);
+ const longitude=utmCentralMeridian+(d-(1+2*t1+c1)*d3/6+(5-2*c1+28*t1-3*c1*c1+8*utmSecondEccentricitySquared+24*t1*t1)*d5/120)/cosPhi1;
+ return[longitude*180/Math.PI,latitude*180/Math.PI];
+}
+
+function pointInRing(point,ring){
+ let inside=false;
+ for(let i=0,j=ring.length-1;i<ring.length;j=i++){
+  const {x:xi,y:yi}=ring[i];
+  const {x:xj,y:yj}=ring[j];
+  if((yi>point.y)!==(yj>point.y)&&point.x<(xj-xi)*(point.y-yi)/(yj-yi)+xi) inside=!inside;
+ }
+ return inside;
+}
+
+function polygonRepresentativePoint(rings){
+ const projectedRings=rings.map(ring=>ring.map(([longitude,latitude])=>projectToUtm18N(longitude,latitude)));
+ const outer=projectedRings[0];
+ let twiceArea=0;
+ let centroidX=0;
+ let centroidY=0;
+ for(let i=0,j=outer.length-1;i<outer.length;j=i++){
+  const cross=outer[j].x*outer[i].y-outer[i].x*outer[j].y;
+  twiceArea+=cross;
+  centroidX+=(outer[j].x+outer[i].x)*cross;
+  centroidY+=(outer[j].y+outer[i].y)*cross;
+ }
+ if(Math.abs(twiceArea)>1e-8){
+  const centroid={x:centroidX/(3*twiceArea),y:centroidY/(3*twiceArea)};
+  if(pointInRing(centroid,outer)&&!projectedRings.slice(1).some(ring=>pointInRing(centroid,ring))) return centroid;
+ }
+ const scanlines=[...new Set(projectedRings.flatMap(ring=>ring.map(point=>point.y)))].sort((a,b)=>a-b);
+ let bestPoint=null;
+ let bestWidth=0;
+ for(let index=1;index<scanlines.length;index++){
+  const y=(scanlines[index-1]+scanlines[index])/2;
+  const intersections=[];
+  projectedRings.forEach(ring=>{
+   for(let i=0,j=ring.length-1;i<ring.length;j=i++){
+    const a=ring[j];
+    const b=ring[i];
+    if((a.y>y)!==(b.y>y)) intersections.push(a.x+(y-a.y)*(b.x-a.x)/(b.y-a.y));
+   }
+  });
+  intersections.sort((a,b)=>a-b);
+  for(let i=1;i<intersections.length;i+=2){
+   const width=intersections[i]-intersections[i-1];
+   if(width>bestWidth){
+    bestWidth=width;
+    bestPoint={x:(intersections[i]+intersections[i-1])/2,y};
+   }
+  }
+ }
+ require(bestPoint,"Could not find an interior representative point for parcel geometry.");
+ return bestPoint;
+}
+
+function parcelRepresentativePoint(geometry,bbl){
+ const polygons=geometry.type==="Polygon"?[geometry.coordinates]:geometry.coordinates;
+ require(Array.isArray(polygons)&&polygons.length>0,`Parcel ${bbl} has invalid polygon coordinates.`);
+ const largestPolygon=polygons.reduce((largest,rings)=>{
+  const ring=rings[0].map(([longitude,latitude])=>projectToUtm18N(longitude,latitude));
+  let twiceArea=0;
+  for(let i=0,j=ring.length-1;i<ring.length;j=i++) twiceArea+=ring[j].x*ring[i].y-ring[i].x*ring[j].y;
+  return Math.abs(twiceArea)>largest.area?{rings,area:Math.abs(twiceArea)}:largest;
+ },{rings:null,area:-1});
+ require(largestPolygon.rings,`Parcel ${bbl} has no polygon component.`);
+ return polygonRepresentativePoint(largestPolygon.rings);
+}
+
+function aggregateParcelPopulation(collection,year,metrics){
+ require(collection.type==="FeatureCollection"&&Array.isArray(collection.features),`Parcel GeoJSON for ${year} is invalid.`);
+ require(collection.features.length===expectedParcelCounts[year]&&collection.features.length===metrics.affected_lots,`Expected ${metrics.affected_lots} flood-intersecting parcels for ${year}, found ${collection.features.length}.`);
+ const bbls=new Set();
+ const cells=new Map();
+ let populationTotal=0;
+ collection.features.forEach((feature,index)=>{
+  require(["Polygon","MultiPolygon"].includes(feature.geometry?.type),`Parcel ${index+1} in ${year} has invalid geometry.`);
+  const bbl=String(feature.properties?.BBL_ID??"").trim();
+  require(bbl.length>0&&!bbls.has(bbl),`Parcel ${index+1} in ${year} has a missing or duplicate BBL_ID.`);
+  bbls.add(bbl);
+  const population=Number(feature.properties?.exposed_pop);
+  require(Number.isFinite(population)&&population>=0,`Parcel ${bbl} in ${year} has an invalid exposed_pop value.`);
+  populationTotal+=population;
+  if(population===0) return;
+  const representative=parcelRepresentativePoint(feature.geometry,bbl);
+  const gridX=Math.floor(representative.x/gridSizeMeters);
+  const gridY=Math.floor(representative.y/gridSizeMeters);
+  const key=`${gridX},${gridY}`;
+  const cell=cells.get(key)??{gridX,gridY,exposedPopulation:0};
+  cell.exposedPopulation+=population;
+  cells.set(key,cell);
+ });
+ require(Math.round(populationTotal)===metrics.potentially_exposed_population,`Parcel population sum for ${year} does not match the parcel exposure CSV.`);
+ const features=[...cells.values()].map(cell=>{
+  const west=cell.gridX*gridSizeMeters;
+  const south=cell.gridY*gridSizeMeters;
+  const east=west+gridSizeMeters;
+  const north=south+gridSizeMeters;
+  const coordinates=[
+   unprojectFromUtm18N(west,south),
+   unprojectFromUtm18N(east,south),
+   unprojectFromUtm18N(east,north),
+   unprojectFromUtm18N(west,north),
+   unprojectFromUtm18N(west,south)
+  ];
+  return{
+   type:"Feature",
+   properties:{grid_x:cell.gridX,grid_y:cell.gridY,exposed_pop:cell.exposedPopulation},
+   geometry:{type:"Polygon",coordinates:[coordinates]}
+  };
+ });
+ const gridTotal=features.reduce((sum,feature)=>sum+feature.properties.exposed_pop,0);
+ require(Math.abs(gridTotal-populationTotal)<1e-6,`250 m grid sum for ${year} does not match the parcel-level population sum.`);
+ console.info("[parcel-intersection 250 m grid]",{year,affectedParcels:collection.features.length,populatedGridCells:features.length,gridPopulationSum:gridTotal});
+ return{type:"FeatureCollection",features};
+}
+
+function parseParcelExposureCsv(text){
+ const lines=text.trim().split(/\r?\n/).map(line=>line.split(",").map(value=>value.trim()));
+ const headers=["year","affected_lots","potentially_exposed_population","total_population","exposure_rate_percent"];
+ require(JSON.stringify(lines[0])===JSON.stringify(headers),"Parcel exposure CSV has an unexpected header.");
+ const values={};
+ lines.slice(1).forEach((row,index)=>{
+  require(row.length===headers.length,`Parcel exposure CSV row ${index+2} has an unexpected number of columns.`);
+  const [year,affectedLots,potentialPopulation,totalPopulation,rate]=row.map(Number);
+  require([year,affectedLots,potentialPopulation,totalPopulation,rate].every(Number.isFinite),`Parcel exposure CSV row ${index+2} contains an invalid number.`);
+  require(!values[String(year)],`Parcel exposure CSV contains duplicate year ${year}.`);
+  values[String(year)]={
+   affected_lots:affectedLots,
+   potentially_exposed_population:potentialPopulation,
+   total_population:totalPopulation,
+   exposure_rate_percent:rate
+  };
+ });
+ require(years.every(year=>values[String(year)])&&Object.keys(values).length===years.length,"Parcel exposure CSV must contain exactly one row for each scenario year.");
+ return values;
+}
+
+function preparePopulationGrids(collections){
+ populationGridsByYear={};
+ const allCellPopulations=[];
+ years.forEach(year=>{
+  const collection=collections[String(year)];
+  const metrics=parcelExposureData[String(year)];
+  const grid=aggregateParcelPopulation(collection,year,metrics);
+  require(metrics.total_population===exposureData[String(year)].total_population,`Total population differs between scenario data and parcel exposure CSV for ${year}.`);
+  populationGridsByYear[year]=grid;
+  allCellPopulations.push(...grid.features.map(feature=>feature.properties.exposed_pop));
+ });
+ allCellPopulations.sort((a,b)=>a-b);
+ require(allCellPopulations.length>0,"Parcel GeoJSONs produce no positive-population grid cells.");
+ populationColorBreaks=[.2,.4,.6,.8].map(probability=>quantile(allCellPopulations,probability));
+ require(populationColorBreaks.every(Number.isFinite),"Could not calculate shared exposed-population color thresholds.");
+ const formatter=new Intl.NumberFormat("en-US",{maximumFractionDigits:1});
+ const labels=[
+  `≤ ${formatter.format(populationColorBreaks[0])} people`,
+  `${formatter.format(populationColorBreaks[0])}–${formatter.format(populationColorBreaks[1])} people`,
+  `${formatter.format(populationColorBreaks[1])}–${formatter.format(populationColorBreaks[2])} people`,
+  `${formatter.format(populationColorBreaks[2])}–${formatter.format(populationColorBreaks[3])} people`,
+  `> ${formatter.format(populationColorBreaks[3])} people`
+ ];
+ document.querySelectorAll("#population-legend li span:last-child").forEach((label,index)=>{
+  if(labels[index]) label.textContent=labels[index];
+ });
+ console.info("[250 m grid shared color thresholds]",populationColorBreaks);
+}
+
+async function updateYear(year){
+ const request=++yearRequest;
+ document.getElementById("map-status").textContent=`Loading ${year} parcel population grid…`;
+ try{
+  const boundary=await loadJson(`sandbox/maps/flood_boundary_visual_${year}.geojson`);
+  if(request!==yearRequest) return;
+  validateYearLayers(year,boundary);
+  const grid=populationGridsByYear[year];
+  const parcelValues=parcelExposureData[String(year)];
+  const nextGridLayer=L.geoJSON(grid,{
+   pane:"populationGridPane",
+   renderer:populationGridRenderer,
+   interactive:false,
+   style:feature=>{
+    const population=feature.properties.exposed_pop;
+    return{
+     stroke:false,
+     fillColor:exposedPopulationColor(population),
+     fillOpacity:.86
+    };
+   }
+  });
+  const nextBoundaryLayer=L.geoJSON(boundary,{style:{color:"#111",weight:1.5,opacity:.85,fill:false,fillOpacity:0,interactive:false,pane:"floodBoundaryPane",renderer:floodBoundaryRenderer}});
+  if(populationGridLayer) map.removeLayer(populationGridLayer);
+  if(floodBoundaryLayer) map.removeLayer(floodBoundaryLayer);
+  populationGridLayer=nextGridLayer.addTo(map);
+  floodBoundaryLayer=nextBoundaryLayer.addTo(map);
+  selectedYear=year;
+  document.querySelectorAll(".year-button").forEach(button=>{
+   button.setAttribute("aria-pressed",String(Number(button.dataset.year)===year));
+  });
+  updateMetrics(year);
+  const waterLevel=Number(exposureData[String(year)].water_level_m_navd88).toFixed(6);
+  document.getElementById("map-status").textContent=`${year} · ${numberFormat.format(grid.features.length)} populated 250 m cells · ${waterLevel} m NAVD88`;
+ }catch(error){
+  if(request===yearRequest){
+   document.querySelectorAll(".year-button").forEach(button=>{
+    button.setAttribute("aria-pressed",String(Number(button.dataset.year)===selectedYear));
+   });
+   showError(error);
+  }
+ }
+}
+
+function renderYearButtons(){
+ const container=document.getElementById("year-buttons");
+ years.forEach(year=>{
+  const button=document.createElement("button");
+  button.type="button";
+  button.className="year-button";
+  button.dataset.year=String(year);
+  button.textContent=String(year);
+  button.setAttribute("aria-pressed",String(year===selectedYear));
+  button.addEventListener("click",()=>updateYear(year));
+  container.append(button);
+ });
+}
+
+function renderCounterfactual(data){
+ const scenarios=data.scenarios;
+ const decomposition=data.decomposition;
+ const format=value=>numberFormat.format(value);
+ document.getElementById("scenario-a").textContent=format(scenarios.A);
+ document.getElementById("scenario-b").textContent=format(scenarios.B);
+ document.getElementById("scenario-c").textContent=format(scenarios.C);
+ document.getElementById("scenario-d").textContent=format(scenarios.D);
+ document.getElementById("total-change").textContent=format(decomposition.total_change);
+ document.getElementById("population-only").textContent=format(decomposition.population_only);
+ document.getElementById("flood-only").textContent=format(decomposition.flood_only);
+ document.getElementById("interaction").textContent=format(decomposition.interaction);
+}
+
+function validateData(){
+ years.forEach(year=>{
+  require(exposureData[String(year)],`Missing exposure metrics for ${year}.`);
+ });
+}
+
+function extendBoundsWithCoordinates(bounds,coordinates){
+ if(Array.isArray(coordinates)&&coordinates.length>=2&&Number.isFinite(coordinates[0])&&Number.isFinite(coordinates[1])){
+  bounds.extend([coordinates[1],coordinates[0]]);
+  return;
+ }
+ if(Array.isArray(coordinates)) coordinates.forEach(value=>extendBoundsWithCoordinates(bounds,value));
+}
+
+async function initialize(){
+ try{
+  const [metrics,counterfactual,parcelCsv,...parcelCollections]=await Promise.all([
+   loadJson("sandbox/exposure_by_year.json"),
+   loadJson("sandbox/counterfactual_analysis.json"),
+   loadText("sandbox/parcel_intersection_exposure_by_year.csv"),
+   ...years.map(year=>loadJson(`sandbox/flood_affected_parcels_${year}.geojson`))
+  ]);
+  exposureData=metrics;
+  parcelExposureData=parseParcelExposureCsv(parcelCsv);
+  validateData();
+  preparePopulationGrids(Object.fromEntries(years.map((year,index)=>[String(year),parcelCollections[index]])));
+  renderYearButtons();
+  renderCounterfactual(counterfactual);
+  map=L.map("map",{zoomControl:true,scrollWheelZoom:true,preferCanvas:true});
+  map.createPane("populationGridPane");
+  map.getPane("populationGridPane").style.zIndex="410";
+  map.createPane("floodBoundaryPane");
+  map.getPane("floodBoundaryPane").style.zIndex="420";
+  populationGridRenderer=L.canvas({pane:"populationGridPane"}).addTo(map);
+  floodBoundaryRenderer=L.svg({pane:"floodBoundaryPane"}).addTo(map);
+  const grayscaleAttribution='Tiles &copy; <a href="https://www.esri.com/">Esri</a>, HERE, Garmin, &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, and the GIS user community';
+  L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}",{
+   attribution:grayscaleAttribution,
+   maxZoom:19
+  }).addTo(map);
+  L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Reference/MapServer/tile/{z}/{y}/{x}",{
+   attribution:grayscaleAttribution,
+   maxZoom:19
+  }).addTo(map);
+  const populationBounds=L.latLngBounds([]);
+  Object.values(populationGridsByYear).forEach(grid=>{
+   grid.features.forEach(feature=>extendBoundsWithCoordinates(populationBounds,feature.geometry.coordinates));
+  });
+  map.fitBounds(populationBounds.pad(.08),{padding:[16,16],maxZoom:12});
+  await updateYear(selectedYear);
+  const resizeMap=()=>map.invalidateSize({pan:false});
+  requestAnimationFrame(resizeMap);
+  new ResizeObserver(resizeMap).observe(document.querySelector(".map-column"));
+  window.addEventListener("resize",resizeMap);
+ }catch(error){
+  showError(error);
+ }
+}
+
+initialize();
+</script>
+</body>
+</html>

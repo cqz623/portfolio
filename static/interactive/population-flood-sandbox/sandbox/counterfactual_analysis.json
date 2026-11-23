@@ -1,0 +1,24 @@
+{
+  "study_area": "Manhattan and Brooklyn",
+  "baseline_year": 2020,
+  "future_year": 2050,
+  "scenarios": {
+    "A": 16851,
+    "B": 18137,
+    "C": 25995,
+    "D": 28029
+  },
+  "decomposition": {
+    "total_change": 11178,
+    "population_only": 1286,
+    "flood_only": 9144,
+    "interaction": 748
+  },
+  "percentage_of_total_change": {
+    "population_only": 11.5,
+    "flood_only": 81.8,
+    "interaction": 6.69
+  },
+  "method": "2020-baseline counterfactual decomposition",
+  "note": "Scenario-based comparison, not causal attribution. Exposure estimated from lot population points and simplified high-tide inundation masks."
+}
