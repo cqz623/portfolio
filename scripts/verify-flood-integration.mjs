@@ -24,11 +24,12 @@ for (const path of ['/', '/research', '/projects/population-flood-sandbox']) {
   const response = await server.respond(new Request(url), { getClientAddress: () => '127.0.0.1' });
   assert.equal(response.status, 200);
   const html = await response.text();
-  if (path !== '/projects/population-flood-sandbox') {
+  if (path === '/') {
     const urls = [...html.matchAll(/href="([^"]+)"/g)].map(m => new URL(m[1], url).pathname);
     const first = urls.indexOf(`${base}/projects/spatial-barrier-game`);
+    assert.ok(first >= 0, 'Work must link to Spatial Barrier Game');
     assert.equal(urls[first + 1], `${base}/projects/population-flood-sandbox`);
-  } else {
+  } else if (path === '/projects/population-flood-sandbox') {
     const src = html.match(/<iframe[^>]+src="([^"]+)"/)?.[1];
     assert.ok(src);
     assert.equal(new URL(src, url).pathname, `${base}/interactive/population-flood-sandbox/index.html`);

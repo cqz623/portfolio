@@ -16,6 +16,9 @@ a:focus-visible { outline: 2px solid var(--hi); outline-offset: 5px; }
 h1, h2, h3, p { margin: 0; }
 button, a { -webkit-tap-highlight-color: transparent; }
 .site-shell { width: min(var(--page-width), calc(100% - 2 * var(--page-gutter))); margin-inline: auto; }
+/* Research/About use the existing Work shell's horizontal configuration. */
+.aligned-page-shell { --page-width: 1380px; padding-inline: 40px; }
+@media (max-width: 1000px) { .aligned-page-shell { padding-inline: 0; } }
 .site-header { display: flex; align-items: baseline; justify-content: space-between; gap: 32px; padding: 36px 0 54px; }
 .identity { font-size: 17px; font-weight: 700; letter-spacing: 0; }
 .site-header nav { display: flex; gap: 35px; font-size: 14px; }

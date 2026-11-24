@@ -24,8 +24,12 @@ for (const path of ['/', '/research', '/about', '/photography', '/bio', ...proje
       await stat(`static${decodeURI(target.pathname.slice(base.length))}`);
     }
   }
-  if (path === '/' || path === '/research') {
+  if (path === '/') {
     assert.ok([...html.matchAll(/href="([^"]+)"/g)].some(m => new URL(m[1], url).pathname === `${base}/projects/spatial-barrier-game`));
+  }
+  if (path === '/research') {
+    assert.equal((html.match(/class="research-entry/g) ?? []).length, 1, 'Research should show one thesis entry');
+    assert.ok(html.includes('From Representation to Decision:') && html.includes('Advisor: Françoise Bollack'));
   }
   if (path === '/projects/spatial-barrier-game') {
     const expected = `${base}/interactive/spatial-barrier-game/index.html`;
