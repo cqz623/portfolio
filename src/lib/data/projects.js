@@ -380,7 +380,7 @@ export const projects = [
     "title": "APTNE Presentation",
     "year": null,
     "category": "",
-    "imageDirectory": "/images/projects/aptne-presentation/",
+    "imageDirectory": "/images/projects/APTNE/",
     "cover": null,
     "images": [],
     "source": null,

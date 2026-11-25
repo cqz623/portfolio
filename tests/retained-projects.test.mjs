@@ -35,7 +35,7 @@ test('retain original metadata, order, empty allowed folders and whitespace alia
 test('only an explicit permitted registration survives before a media folder exists', () => {
   const aptne = projects.find(project => project.slug === 'aptne-presentation');
   assert.equal(aptne.allowWithoutMedia,true);
-  assert.equal(aptne.imageDirectory,'/images/projects/aptne-presentation/');
+  assert.equal(aptne.imageDirectory,'/images/projects/APTNE/');
   assert.deepEqual(retainedProjects([aptne],[],[]),[aptne]);
   assert.deepEqual(retainedProjects([{...aptne,allowWithoutMedia:false}],[],[]),[]);
   assert.deepEqual(retainedProjects([{...aptne,slug:'unregistered',imageDirectory:'/images/projects/unregistered/'}],[],[]),[]);

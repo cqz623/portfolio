@@ -4,7 +4,7 @@ const allowed = new Set([
   'population-flood-sandbox', 'spatial-barrier-game', 'cloud', 'deep-eye',
   'downsville-covered-bridge', 'floating-purifier', 'layered-walkway',
   'light-and-shadow-lane', 'mercury-store', 'reviving-spaces', 'sustainability',
-  'theatre', 'material-experimentation', 'decarbonization', 'theory-in-practice', 'xu-tiantian', 'funeral-home', 'aptne-presentation'
+  'theatre', 'material-experimentation', 'decarbonization', 'theory-in-practice', 'xu-tiantian', 'funeral-home', 'aptne-presentation', 'aptne'
 ]);
 // Match the actual folder paths, retaining existing whitespace aliases unchanged.
 const folderKey = (/** @type {string} */ folder) => folder.replace(/\s+/g, '').toLowerCase();

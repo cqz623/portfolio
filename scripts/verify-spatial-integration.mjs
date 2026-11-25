@@ -28,8 +28,12 @@ for (const path of ['/', '/research', '/about', '/photography', '/bio', ...proje
     assert.ok([...html.matchAll(/href="([^"]+)"/g)].some(m => new URL(m[1], url).pathname === `${base}/projects/spatial-barrier-game`));
   }
   if (path === '/research') {
-    assert.equal((html.match(/class="research-entry/g) ?? []).length, 1, 'Research should show one thesis entry');
+    assert.equal((html.match(/class="research-entry/g) ?? []).length, 3, 'Research should show three research entries');
     assert.ok(html.includes('From Representation to Decision:') && html.includes('Advisor: Françoise Bollack'));
+    assert.ok(html.includes('COLLABORATIVE RESEARCH · COLUMBIA GSAPP · SPRING 2026'));
+    assert.ok(html.includes('Should We Preserve the Scars of Water?') && html.includes('Status: accepted'));
+    assert.ok([...html.matchAll(/href="([^"]+)"/g)].some(m => new URL(m[1], url).pathname.replace(/\/$/, '') === `${base}/projects/aptne-presentation`));
+    assert.ok([...html.matchAll(/href="([^"]+)"/g)].some(m => new URL(m[1], url).pathname.replace(/\/$/, '') === `${base}/projects/decarbonization`));
   }
   if (path === '/projects/spatial-barrier-game') {
     const expected = `${base}/interactive/spatial-barrier-game/index.html`;

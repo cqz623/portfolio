@@ -1,4 +1,5 @@
 <script>
+  import { projectUrl } from '#lib/utils/urls.js';
   import SiteHeader from '#lib/components/SiteHeader.svelte';
 </script>
 
@@ -22,6 +23,27 @@
       </div>
       <p class="status">Status: in progress</p>
     </article>
+    <article class="research-entry" aria-labelledby="reuse-title">
+      <span class="entry-number" aria-label="Entry 02">02</span>
+      <div class="entry-content">
+        <p class="entry-type">COLLABORATIVE RESEARCH · COLUMBIA GSAPP · SPRING 2026</p>
+        <h2 id="reuse-title">Reuse and Deconstruction: Decarbonization on Columbia University’s Manhattanville Campus</h2>
+        <p class="advisor">Faculty: Erica Avrami &amp; Anna Gasha</p>
+        <p class="description">Combines GIS-based spatial analysis, historical building data, and embodied carbon assessment to investigate low-carbon redevelopment strategies. Drawing on a spatiotemporal database of 261 buildings from 1894 to 2026, the research evaluates building retention, demolition, adaptive reuse, and material recovery to support data-driven decisions for sustainable urban transformation.</p>
+        <a class="project-link" href={projectUrl('decarbonization')}>View project →</a>
+      </div>
+      <p class="status">Status: completed</p>
+    </article>
+    <article class="research-entry" aria-labelledby="aptne-title">
+      <span class="entry-number" aria-label="Entry 03">03</span>
+      <div class="entry-content">
+        <p class="entry-type">APTNE 2027 ANNUAL MEETING &amp; SYMPOSIUM</p>
+        <h2 id="aptne-title">Should We Preserve the Scars of Water? Material Deterioration as Historical Evidence in Venice’s Arsenale</h2>
+        <p class="description">Investigates water-related deterioration of historic masonry and lime plaster at Venice’s Arsenale. By mapping material conditions and correlating deterioration patterns with historical records, the research explores how spatial and temporal data can inform the interpretation of material changes and guide conservation decisions.</p>
+        <a class="project-link" href={projectUrl('aptne-presentation')}>View project →</a>
+      </div>
+      <p class="status">Status: accepted</p>
+    </article>
   </main>
 </div>
 
@@ -36,6 +58,10 @@
     border-block: 1px solid #ddd;
     padding-block: 28px 40px;
   }
+  .research-entry + .research-entry { border-top: 0; }
+  /* Match entry 01's status width so both entries share identical columns. */
+  .research-entry + .research-entry .status { min-width: 19ch; }
+  .project-link { display: inline-block; margin-top: 20px; font-size: 13px; line-height: 1.8; color: var(--fg-dim); }
   .entry-number { font-size: 14px; line-height: 1.6; }
   .entry-content { min-width: 0; }
   .entry-type { font-size: 12px; line-height: 1.6; letter-spacing: .06em; color: var(--fg-dim); }
